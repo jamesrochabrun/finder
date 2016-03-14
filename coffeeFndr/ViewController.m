@@ -28,22 +28,88 @@
 //this is the property for the sorted array
 @property NSArray *coffeeShops;
 
+//creating property to bind query search
+@property NSString *query;
+
+
+
+
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     //creating an instance of CLLocationManager
     self.locationManager = [CLLocationManager new];
     //set its delegate to this ViewController
     self.locationManager.delegate = self;
-    //using the method requestAlwaysAuthorization
-    [self.locationManager requestAlwaysAuthorization];
-    //updating the location
-    [self.locationManager startUpdatingLocation];
+    
+    
+    //8) Call the searchQuery when the view loads
+    
+    [self searchQuery];
+    
+    
 }
+
+
+//(upgrading the coffeeFinder follow the numbers)
+//1)creating a custom method for the search
+
+-(void)searchQuery{
+    
+    
+    //2) create a UIAlertview to ask the user for a search
+    //here ins the propmpt
+    UIAlertController *alertController = [UIAlertController alertControllerWithTitle:@"Hello!\nWhat are you looking for?" message:nil preferredStyle:UIAlertControllerStyleAlert];
+    
+    //now adding a text field for the search
+    
+    [alertController addTextFieldWithConfigurationHandler:^(UITextField * _Nonnull textField) {
+        textField.placeholder = @"Search";
+    }];
+    
+    //making a cancel action
+    UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:nil];
+    
+    
+    //making the search button
+    
+    UIAlertAction *searchAction = [UIAlertAction actionWithTitle:@"Search" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+        
+        //3) look for the query typed by the user with a new instance of UITextField
+        
+        UITextField *userQuery = alertController.textFields.firstObject;
+        
+        //4) create a NSString to store the String wrote by the user , and then use it as an assigner in the request.naturalLanguageQuery inside the findCoffeePlaces custom method
+        self.query = userQuery.text;
+        
+        //5)Remove the requestAlwaysAuthorization and startUpdatingLocation messages from the viewDidLoad method and add it at the bottmo of this new method like this.
+        
+        //using the method requestAlwaysAuthorization
+        [self.locationManager requestAlwaysAuthorization];
+        //updating the location
+        [self.locationManager startUpdatingLocation];
+        
+        
+    }];
+    
+    //6) now lets add the actions to the alertController
+    
+    [alertController addAction:cancelAction];
+    [alertController addAction:searchAction];
+    
+    
+    //7) Display the alert controller
+    [self presentViewController:alertController animated:true completion:nil];
+    
+    
+}
+
+
+
 
 ////here we put the required methods for the tableView
 
@@ -54,7 +120,7 @@
 }
 
 //And now the instances of the UITableViewCell
-  //tableView:cellForRowAtIndexPath:
+//tableView:cellForRowAtIndexPath:
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell * cell = [tableView dequeueReusableCellWithIdentifier:@"CellId"];
     //then we create an instance of CoffeShop so we can access its properties..this new instance is a indexPath of the self.coffeShops array
@@ -92,8 +158,11 @@
 -(void)findCoffeePlaces:(CLLocation *)location{
     //creating a new instace of the class MAPKITLocalSearchRequest
     MKLocalSearchRequest *request = [MKLocalSearchRequest new];
-    //setting the string that we want to serach for with the property naturalLangageQuery
-    request.naturalLanguageQuery = @"coffee";
+    //setting the string that we want to search for with the property naturalLangageQuery it can be a literal string hardcoded
+    //5) Or can be a variable or a property value like the one in self.query
+    request.naturalLanguageQuery = self.query;
+    
+    
     //setting the region where we want to look at it with the property region,
     //we use the location parameter requested in this method to get acces to its coordinate property
     request.region = MKCoordinateRegionMake(location.coordinate, MKCoordinateSpanMake(0.5,0.5));
@@ -109,27 +178,40 @@
         NSMutableArray *tempArray = [NSMutableArray new];
         
         
-    //now create a for loop to show the first 5 response
-        for (int i=0; i<5; i++) {
-            //creating a new instance of the class MapItem to alloc the response, a new mapItem for every item in the mapItems Array, using the objectAtIndex method to set the location
-            MKMapItem *mapItem = [mapItems objectAtIndex:i];
-            //creating a new instance of the class CLLocationDistance and setting it to the... the mapItem new instance with the properties placemark.location that holds the location information using the message distanceFromLocation, so in this case the receiver is each coffeplace and the message sets the distance between the place and the user.(distance is a double)
-            CLLocationDistance distance = [mapItem.placemark.location distanceFromLocation:self.userLocation];
-            //setting the result in miles
-            float milesDistance = distance / 1609.34;
+        //now create a for loop to show the first 10 places
+        for (int i=0; i<10; i++) {
             
-            //Now that we have the item and the distance we want to store it in a custom object for each coffee place...lets create a new cocoa tpuch file for that with a NSObject class....
             
-            //Now that we create the new class CoffeeShop and we import the .h file in this file lets create new instances of CoffeeShop
-            CoffeeShop *coffeeShop = [CoffeeShop new];
+            ///9) Creating an if statement to check for items in the array ...WEIRD BEHAVIOUR
             
-            //and now we can set the properties of the new instance o CoffeeShop, with the mapItem instance of the class MKMapItem ,that we create before and the same with the milesDistance float
-            coffeeShop.mapItem = mapItem;
-            coffeeShop.distance = milesDistance;
-            //now that we have the instances of the CoffeeShop lets create an array outside the loop to store them...
+            if ([mapItems count] == 0) {
+                [self searchQuery];
+                
+            }else{
+                //creating a new instance of the class MapItem to alloc the response, a new mapItem for every item in the mapItems Array, using the objectAtIndex method to set the location
+                MKMapItem *mapItem = [mapItems objectAtIndex:i];
+                
+                
+                //creating a new instance of the class CLLocationDistance and setting it to the... the mapItem new instance with the properties placemark.location that holds the location information using the message distanceFromLocation, so in this case the receiver is each coffeplace and the message sets the distance between the place and the user.(distance is a double)
+                CLLocationDistance distance = [mapItem.placemark.location distanceFromLocation:self.userLocation];
+                //setting the result in miles
+                float milesDistance = distance / 1609.34;
+                
+                //Now that we have the item and the distance we want to store it in a custom object for each coffee place...lets create a new cocoa tpuch file for that with a NSObject class....
+                
+                //Now that we create the new class CoffeeShop and we import the .h file in this file lets create new instances of CoffeeShop
+                CoffeeShop *coffeeShop = [CoffeeShop new];
+                
+                //and now we can set the properties of the new instance o CoffeeShop, with the mapItem instance of the class MKMapItem ,that we create before and the same with the milesDistance float
+                coffeeShop.mapItem = mapItem;
+                coffeeShop.distance = milesDistance;
+                //now that we have the instances of the CoffeeShop lets create an array outside the loop to store them...
+                
+                //now lets use the addObject method to add every new instance of CoffeShop and its properties inside the array
+                [tempArray addObject:coffeeShop];
+                
+            }
             
-            //now lets use the addObject method to add every new instance of CoffeShop and its properties inside the array
-            [tempArray addObject:coffeeShop];
         }
         
         //Now lets call the findCoffeePlaces: custom method inside the locationManager:didUpdateLocations:
@@ -137,9 +219,9 @@
         
         //////////sorting the coffeShops based on distance and add them to a new array and then add that array to an array as a property so we can display it to the user
         
-            //creating a new instance of the class NSSortDescriptor here @"distance" is the coffeShop.distance instance
+        //creating a new instance of the class NSSortDescriptor here @"distance" is the coffeShop.distance instance
         
-    NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:true];
+        NSSortDescriptor *sortDescriptor = [NSSortDescriptor sortDescriptorWithKey:@"distance" ascending:true];
         
         //creating the sorted Array, this returns the tempArray sorted by distance
         NSArray *sortedArray = [tempArray sortedArrayUsingDescriptors:[NSArray arrayWithObject:sortDescriptor]];
@@ -150,7 +232,7 @@
         self.coffeeShops = [NSArray arrayWithArray:sortedArray];
         
         //now lets make a fast enumeration for every item in the sortedArray, here we are creating a new instance with the class CoffeeShop for every item inside the array self.coffeeShops.
-           //NOte the firts coffeShop is an instance of the CoffeShop class and the other coffeShop is the porperty declared in this file for the viewcontroller
+        //NOte the firts coffeShop is an instance of the CoffeShop class and the other coffeShop is the porperty declared in this file for the viewcontroller
         
         for (CoffeeShop *coffeeShop in self.coffeeShops){
             NSLog(@"%.1f", coffeeShop.distance);
@@ -163,21 +245,28 @@
 }
 
 
+//10) creating the method for the search button in the nav bar
+
+- (IBAction)magnifyingGlassButton:(UIBarButtonItem *)sender {
+    [self searchQuery];
+}
+
+
 
 //setting the method dor the Segue, this happens before the segues its executed
 -(void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     //creating an instance of the DirectionViewController class
-      //we are using the segue parameter and accesing its property  destinationViewController to set the new instance of DirectionsViewController
+    //we are using the segue parameter and accesing its property  destinationViewController to set the new instance of DirectionsViewController
     DirectionsViewController *directionsViewController = segue.destinationViewController;
     
     //so now we want to pass the coffeShop selected to the DirectionsViewController, for that we import the Coffeeshop class to the DirectionsViewcontroller.h and create a CoffeShop property.
-          //here when the user taps in one cell the row is asigned to the directionsViewController.coffeeShop.
+    //here when the user taps in one cell the row is asigned to the directionsViewController.coffeeShop.
     directionsViewController.coffeeShop = [self.coffeeShops objectAtIndex:self.tableView.indexPathForSelectedRow.row];
     
     //now we bind the userLocation in this view with the one in the DirectionsViewController, now in the DirectionsViewController.m we can create a method for get directions for the user
     directionsViewController.userLocation = self.userLocation;
     
-
+    
     
 }
 

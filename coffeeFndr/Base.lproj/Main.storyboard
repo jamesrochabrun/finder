@@ -7,7 +7,7 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--CoffeShops Near Me-->
+        <!--Places around me-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -68,7 +68,9 @@
                             <constraint firstAttribute="trailingMargin" secondItem="9IU-bH-diL" secondAttribute="trailing" constant="-20" id="NOp-20-xMS"/>
                             <constraint firstItem="9IU-bH-diL" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="RuK-nC-koo"/>
                             <constraint firstItem="9IU-bH-diL" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="aqR-vs-ohb"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9IU-bH-diL" secondAttribute="bottom" id="dbz-09-Tfz"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="9IU-bH-diL" secondAttribute="bottom" id="dbz-09-Tfz">
+                                <variation key="widthClass=compact" constant="60"/>
+                            </constraint>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
@@ -93,7 +95,13 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="CoffeShops Near Me" id="BqD-Z1-HsN"/>
+                    <navigationItem key="navigationItem" title="Places around me" id="BqD-Z1-HsN">
+                        <barButtonItem key="rightBarButtonItem" systemItem="search" id="ARk-KT-rIP">
+                            <connections>
+                                <action selector="magnifyingGlassButton:" destination="BYZ-38-t0r" id="XzL-P6-jZd"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="9IU-bH-diL" id="Cc5-vn-CZp"/>
                     </connections>
@@ -121,34 +129,87 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xxm-bR-UPB">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="bgO-7x-FSc"/>
+                                    <constraint firstAttribute="width" constant="407" id="ogB-VX-nX8"/>
+                                </constraints>
+                                <items>
+                                    <barButtonItem title="Walking" width="187" id="qx8-9V-oFy">
+                                        <connections>
+                                            <action selector="getDirectionsWalkingButton:" destination="osj-Wd-sOn" id="gcC-pg-Lv5"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Driving" width="150" id="S0L-wV-lHO">
+                                        <connections>
+                                            <action selector="getDirectionsDrivingButton:" destination="osj-Wd-sOn" id="vRh-J2-jYA"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="barTintColor" red="0.90980392160000001" green="0.29803921570000003" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="bgO-7x-FSc"/>
+                                        <exclude reference="ogB-VX-nX8"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <exclude reference="bgO-7x-FSc"/>
+                                        <exclude reference="ogB-VX-nX8"/>
+                                    </mask>
+                                </variation>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="xxm-bR-UPB" firstAttribute="trailing" secondItem="faP-Eg-hr2" secondAttribute="trailing" id="4aU-ye-cBV"/>
                             <constraint firstItem="KQl-N5-NZo" firstAttribute="top" secondItem="faP-Eg-hr2" secondAttribute="bottom" id="7No-qz-W3K"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="xxm-bR-UPB" secondAttribute="trailing" constant="-27" id="KYJ-pA-LvO"/>
                             <constraint firstItem="faP-Eg-hr2" firstAttribute="top" secondItem="La5-EV-Mfp" secondAttribute="bottom" id="Ui3-PE-xwy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="faP-Eg-hr2" secondAttribute="trailing" constant="-20" id="UoN-DF-vSu"/>
+                            <constraint firstItem="xxm-bR-UPB" firstAttribute="leading" secondItem="yYH-Zt-4xt" secondAttribute="leadingMargin" constant="-20" id="hL6-05-L3y"/>
                             <constraint firstItem="faP-Eg-hr2" firstAttribute="leading" secondItem="yYH-Zt-4xt" secondAttribute="leadingMargin" constant="-20" id="lHH-Bu-LvJ"/>
+                            <constraint firstItem="xxm-bR-UPB" firstAttribute="leading" secondItem="faP-Eg-hr2" secondAttribute="leading" id="oA8-cJ-aPE"/>
+                            <constraint firstItem="xxm-bR-UPB" firstAttribute="top" secondItem="La5-EV-Mfp" secondAttribute="bottom" constant="492" id="sWl-3C-iH7"/>
+                            <constraint firstItem="xxm-bR-UPB" firstAttribute="bottom" secondItem="KQl-N5-NZo" secondAttribute="top" id="tOL-mG-mD7"/>
                         </constraints>
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="faP-Eg-hr2"/>
+                                <exclude reference="xxm-bR-UPB"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="7No-qz-W3K"/>
                                 <exclude reference="Ui3-PE-xwy"/>
                                 <exclude reference="UoN-DF-vSu"/>
                                 <exclude reference="lHH-Bu-LvJ"/>
+                                <exclude reference="4aU-ye-cBV"/>
+                                <exclude reference="KYJ-pA-LvO"/>
+                                <exclude reference="hL6-05-L3y"/>
+                                <exclude reference="oA8-cJ-aPE"/>
+                                <exclude reference="sWl-3C-iH7"/>
+                                <exclude reference="tOL-mG-mD7"/>
+                                <exclude reference="7No-qz-W3K"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
                             <mask key="subviews">
                                 <include reference="faP-Eg-hr2"/>
+                                <include reference="xxm-bR-UPB"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="7No-qz-W3K"/>
                                 <include reference="Ui3-PE-xwy"/>
                                 <include reference="UoN-DF-vSu"/>
                                 <include reference="lHH-Bu-LvJ"/>
+                                <include reference="4aU-ye-cBV"/>
+                                <exclude reference="KYJ-pA-LvO"/>
+                                <exclude reference="hL6-05-L3y"/>
+                                <include reference="oA8-cJ-aPE"/>
+                                <exclude reference="sWl-3C-iH7"/>
+                                <include reference="tOL-mG-mD7"/>
+                                <include reference="7No-qz-W3K"/>
                             </mask>
                         </variation>
                     </view>
@@ -169,7 +230,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" red="0.90980392156862744" green="0.29803921568627451" blue="0.23921568627450979" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="barTintColor" red="0.90980392160000001" green="0.29803921570000003" blue="0.23921568630000001" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         </textAttributes>

@@ -17,10 +17,13 @@
 
 @interface DirectionsViewController : UIViewController
 
+
 //new property for this view
 @property CoffeeShop *coffeeShop;
 
 //new property for get acces of the user Location
 @property CLLocation *userLocation;
+
+
 
 @end
