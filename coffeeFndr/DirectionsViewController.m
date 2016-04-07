@@ -50,8 +50,7 @@
     MKPlacemark *destinationPlaceMark = [[MKPlacemark alloc]initWithCoordinate:destinationCoordinate addressDictionary:nil];
     MKMapItem *destinationMapItem = [[MKMapItem alloc] initWithPlacemark: destinationPlaceMark];
     
-    //Now we are going to use the to new instances of MKPlacemark to make a new instance of MKdirectionsRequest, HERE I MUST CHANGE THIS IF I DELETE THE PROEPERTY.
-    
+    //Now we are going to use the to new instances of MKPlacemark to make a new instance of MKdirectionsRequest
     self.request = [[MKDirectionsRequest alloc]init];
 
     

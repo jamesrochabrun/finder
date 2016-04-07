@@ -182,16 +182,16 @@
                                 <exclude reference="xxm-bR-UPB"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="Ui3-PE-xwy"/>
-                                <exclude reference="UoN-DF-vSu"/>
-                                <exclude reference="lHH-Bu-LvJ"/>
+                                <exclude reference="7No-qz-W3K"/>
                                 <exclude reference="4aU-ye-cBV"/>
                                 <exclude reference="KYJ-pA-LvO"/>
                                 <exclude reference="hL6-05-L3y"/>
                                 <exclude reference="oA8-cJ-aPE"/>
                                 <exclude reference="sWl-3C-iH7"/>
                                 <exclude reference="tOL-mG-mD7"/>
-                                <exclude reference="7No-qz-W3K"/>
+                                <exclude reference="Ui3-PE-xwy"/>
+                                <exclude reference="UoN-DF-vSu"/>
+                                <exclude reference="lHH-Bu-LvJ"/>
                             </mask>
                         </variation>
                         <variation key="widthClass=compact">
@@ -200,16 +200,16 @@
                                 <include reference="xxm-bR-UPB"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="Ui3-PE-xwy"/>
-                                <include reference="UoN-DF-vSu"/>
-                                <include reference="lHH-Bu-LvJ"/>
+                                <include reference="7No-qz-W3K"/>
                                 <include reference="4aU-ye-cBV"/>
                                 <exclude reference="KYJ-pA-LvO"/>
                                 <exclude reference="hL6-05-L3y"/>
                                 <include reference="oA8-cJ-aPE"/>
                                 <exclude reference="sWl-3C-iH7"/>
                                 <include reference="tOL-mG-mD7"/>
-                                <include reference="7No-qz-W3K"/>
+                                <include reference="Ui3-PE-xwy"/>
+                                <include reference="UoN-DF-vSu"/>
+                                <include reference="lHH-Bu-LvJ"/>
                             </mask>
                         </variation>
                     </view>

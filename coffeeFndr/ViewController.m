@@ -178,17 +178,16 @@
         NSMutableArray *tempArray = [NSMutableArray new];
         
         
-        //now create a for loop to show the first 10 places
-        for (int i=0; i<10; i++) {
+        if ([mapItems count] > 0) {
             
+            for (int i=0; i<10; i++) {
             
-            ///9) Creating an if statement to check for items in the array ...WEIRD BEHAVIOUR
-            
-            if ([mapItems count] == 0) {
-                [self searchQuery];
-                
-            }else{
                 //creating a new instance of the class MapItem to alloc the response, a new mapItem for every item in the mapItems Array, using the objectAtIndex method to set the location
+                
+                // checks that there'll be an object at the index "i"
+                if (i > mapItems.count - 1) {
+                    continue;
+                }
                 MKMapItem *mapItem = [mapItems objectAtIndex:i];
                 
                 
@@ -212,6 +211,8 @@
                 
             }
             
+        } else {
+             [self searchQuery];
         }
         
         //Now lets call the findCoffeePlaces: custom method inside the locationManager:didUpdateLocations:
